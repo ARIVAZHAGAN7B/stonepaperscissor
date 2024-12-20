@@ -4,7 +4,7 @@ let health = 5;
 function change(event) {
     const rand = ["Stone", "Scissor", "Paper"];
     const selectrand = rand[Math.floor(Math.random() * 3)];
-    document.getElementById("result").textContent = `Random choice: ${selectrand}`;
+    document.getElementById("result").textContent = ` the last random choice: ${selectrand}`;
     const input = event.currentTarget.getAttribute("data-choice");
     console.log(`User choice: ${input}`);
     console.log(`Random choice: ${selectrand}`);
@@ -16,13 +16,13 @@ function change(event) {
         (selectrand === "Scissor" && input === "Stone") ||
         (selectrand === "Paper" && input === "Scissor")
     ) {
+        document.querySelector(".score").textContent = `Score : ${score}`;
         alert("You Won");
         score++;
-        document.querySelector(".score").textContent = `Score : ${score}`;
     } else {
+        document.querySelector(".life").textContent = `Health : ${health}`;
         alert("You Lost");
         health--;
-        document.querySelector(".life").textContent = `Health : ${health}`;
     }
 
     if (health <= 0) {
