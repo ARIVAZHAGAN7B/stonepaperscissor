@@ -1,32 +1,53 @@
-let score = 0;
-let health = 5;
+const choices = ["Stone", "Scissor", "Paper"];
+let gameState = {
+    score: 0,
+    health: 5
+};
+
+function getRandomChoice() {
+    return choices[Math.floor(Math.random() * choices.length)];
+}
+
+function updateUI() {
+    document.querySelector(".score").textContent = `Score: ${gameState.score}`;
+    document.querySelector(".life").textContent = `Health: ${gameState.health}`;
+}
+
+function handleGameOver() {
+    alert("Game Over!");
+    gameState.score = 0;
+    gameState.health = 5;
+    updateUI();
+}
 
 function change(event) {
-    const rand = ["Stone", "Scissor", "Paper"];
-    const selectrand = rand[Math.floor(Math.random() * 3)];
-    document.getElementById("result").textContent = ` the last random choice: ${selectrand}`;
-    const input = event.currentTarget.getAttribute("data-choice");
-    console.log(`User choice: ${input}`);
-    console.log(`Random choice: ${selectrand}`);
+    const userChoice = event.currentTarget.getAttribute("data-choice");
+    const computerChoice = getRandomChoice();
+    document.getElementById("result").textContent = `The last random choice: ${computerChoice}`;
 
-    if (selectrand === input) {
-        alert("Draw");
+    console.log(`User choice: ${userChoice}`);
+    console.log(`Random choice: ${computerChoice}`);
+
+    if (userChoice === computerChoice) {
+        document.getElementById("status").textContent = "It's a Draw!";
     } else if (
-        (selectrand === "Stone" && input === "Paper") ||
-        (selectrand === "Scissor" && input === "Stone") ||
-        (selectrand === "Paper" && input === "Scissor")
+        (computerChoice === "Stone" && userChoice === "Paper") ||
+        (computerChoice === "Scissor" && userChoice === "Stone") ||
+        (computerChoice === "Paper" && userChoice === "Scissor")
     ) {
-        score++;
-        document.querySelector(".score").textContent = `Score : ${score}`;
-        alert("You Won");
+        gameState.score++;
+        document.getElementById("status").textContent = "You Won!";
     } else {
-        health--;
-        document.querySelector(".life").textContent = `Health : ${health}`;
-        alert("You Lost");
+        gameState.health--;
+        document.getElementById("status").textContent = "You Lost!";
     }
 
-    if (health <= 0) {
-        alert("Game Over!");
-        location.reload();
+    updateUI();
+
+    if (gameState.health <= 0) {
+        handleGameOver();
     }
 }
+
+// Initial UI Update
+updateUI();
