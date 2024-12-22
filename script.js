@@ -16,13 +16,13 @@ function change(event) {
         (selectrand === "Scissor" && input === "Stone") ||
         (selectrand === "Paper" && input === "Scissor")
     ) {
+        score++;
         document.querySelector(".score").textContent = `Score : ${score}`;
         alert("You Won");
-        score++;
     } else {
+        health--;
         document.querySelector(".life").textContent = `Health : ${health}`;
         alert("You Lost");
-        health--;
     }
 
     if (health <= 0) {
